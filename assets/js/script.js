@@ -6,16 +6,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
     for (let button of buttons) {
         button.addEventListener("click", function () {
-                if (this.getAttribute("data-type") === "submit") {
-                    checkAnswer();
+            if (this.getAttribute("data-type") === "submit") {
+                checkAnswer();
 
-                } else {
-                    let gameType = this.getAttribute("data-type");
-                    runGame(gameType);
-                }
+            } else {
+                let gameType = this.getAttribute("data-type");
+                runGame(gameType);
+            }
 
-         })
-     }
+        })
+    }
 })
 
 runGame("addition");
@@ -28,15 +28,19 @@ runGame("addition");
 function runGame(gameType) {
 
     // Creates two random numbers between 1 and 25
-    let num1 = Math.floor(Math.random() *25) + 1;
-    let num2 = Math.floor(Math.random() *25) + 1;
+    let num1 = Math.floor(Math.random() * 25) + 1;
+    let num2 = Math.floor(Math.random() * 25) + 1;
 
     if (gameType === "addition") {
-        displayAdditionQuestion (num1, num2);
-    } else {
+        displayAdditionQuestion(num1, num2);
+    } else if (gameType === "multiply") {
+        displayMultiplyQuestion(num1, num2);
+    }
+    else {
         alert(`Unknown game type: ${gameType}`);
         throw `Unknown game type: ${gameType}.Aborting!`;
     }
+
 }
 
 
@@ -49,11 +53,11 @@ function checkAnswer() {
     let calculatedAnswer = calculateCorrecrAnswer();
     let isCorrect = userAnswer === calculatedAnswer[0];
 
-    if(isCorrect) {
-        alert ("Hey! You got it right! :D");
+    if (isCorrect) {
+        alert("Hey! You got it right! :D");
         incrementScore();
     } else {
-        alert (`Awwww.... you answered ${userAnswer}. The correct answer was ${calculatedAnswer[0]}!`);
+        alert(`Awwww.... you answered ${userAnswer}. The correct answer was ${calculatedAnswer[0]}!`);
         incrementWrongAnswer();
     }
 
@@ -74,8 +78,10 @@ function calculateCorrecrAnswer() {
 
     if (operator === "+") {
         return [operand1 + operand2, "addition"];
-    } else { 
-        alert (`Unimplement operator ${operator}`);
+    } else if (operator === "x") {
+        return [operand1 * operand2, "multiply"];
+    } else {
+        alert(`Unimplement operator ${operator}`);
         throw `Unimplement operator ${operator}.Aborting!`;
 
     }
@@ -112,6 +118,8 @@ function displaySubtractQuestion() {
 
 }
 
-function displayMultiplyQuestion() {
-
+function displayMultiplyQuestion(operand1, operand2) {
+    document.getElementById("operand1").textContent = operand1;
+    document.getElementById("operand2").textContent = operand2;
+    document.getElementById("operator").textContent = "x";
 }
